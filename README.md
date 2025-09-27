@@ -106,7 +106,7 @@ npm install
 2. **Environment variables are configured in vite.config.js:**
 ```javascript
 define: {
-  'import.meta.env.VITE_SUPABASE_URL': JSON.stringify('https://kbybdtacoqvgcijrkzkv.supabase.co/rest/v1'),
+  'import.meta.env.VITE_SUPABASE_URL': JSON.stringify('https://YOUR_PROJECT_ID.supabase.co/rest/v1'),
   'import.meta.env.VITE_SUPABASE_ANON_KEY': JSON.stringify('your-anon-key-here')
 }
 ```

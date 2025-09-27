@@ -128,12 +128,6 @@ VITE_SUPABASE_URL=https://your-project-id.supabase.co/rest/v1/
 VITE_SUPABASE_ANON_KEY=your-anon-key-here
 ```
 
-## Supported Browsers
-
-- Chrome/Edge (latest 2 versions)
-- Firefox (latest 2 versions)
-- Safari 14+
-
 ## Technical Features
 
 ### State Management
@@ -173,27 +167,8 @@ VITE_SUPABASE_ANON_KEY=your-anon-key-here
 - ✅ Responsive design for mobile devices
 
 ### Code Quality
-- ✅ Simplified form handling (removed vee-validate complexity)
+- ✅ Simplified form handling 
 - ✅ Extracted SVG icons into reusable components
 - ✅ Clean component architecture
 - ✅ Proper error handling
 
-## Recent Updates
-
-- **Simplified Form Handling**: Removed complex vee-validate setup in favor of simple reactive forms
-- **Toast Notifications**: Added success and error messages for all CRUD operations
-- **Delete Functionality**: Added delete buttons with confirmation dialogs
-- **Icon Components**: Extracted all SVG icons into reusable Vue components
-- **Tailwind CSS**: Updated to latest version with Vite plugin
-
-## Contributing
-
-1. Fork the project
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
-
-## License
-
-This project is licensed under the MIT License.

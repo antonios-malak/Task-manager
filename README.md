@@ -2,6 +2,77 @@
 
 A modern task management application built with Vue 3, Pinia, Axios, and Tailwind CSS.
 
+## Framework Choice Justification
+
+**Why Vue.js over React?**
+
+I chose Vue.js for this project because:
+
+- **Composition API**: Provides excellent reactivity and component composition
+- **Built-in reactivity**: No need for additional state management complexity
+- **Template syntax**: More intuitive and readable than JSX
+- **Smaller bundle size**: Vue 3 is lightweight and performant
+- **Excellent TypeScript support**: Great developer experience
+- **Pinia integration**: Seamless state management with Vue ecosystem
+- **Vue Router**: Mature routing solution with excellent features
+
+## State Management Approach
+
+**Pinia Store Architecture:**
+
+- **taskStore.js**: Manages all task-related state, API calls, and filtering
+- **categoryStore.js**: Handles category data and API interactions
+- **Centralized state**: Single source of truth for application data
+- **Actions**: Encapsulate business logic and API calls
+- **Reactive state**: Automatic UI updates when state changes
+- **Error handling**: Centralized error management with toast notifications
+
+## Component Architecture Overview
+
+```
+src/
+├── components/          # Reusable UI components
+│   ├── TaskCard.vue     # Individual task display card
+│   ├── TaskModalForm.vue # Add/Edit task modal form
+│   ├── SidebarFilters.vue # Filtering sidebar component
+│   ├── LoadingSpinner.vue # Loading state component
+│   └── ConfirmDialog.vue # Confirmation dialog component
+├── views/              # Page-level components
+│   ├── TaskList.vue    # Main task listing page
+│   └── TaskDetail.vue  # Individual task detail page
+├── stores/             # Pinia state management
+│   ├── taskStore.js    # Task state and actions
+│   └── categoryStore.js # Category state and actions
+├── assets/icons/       # Reusable SVG icon components
+└── services/           # API service layer
+    └── api.js         # Axios configuration
+```
+
+## Features Implemented
+
+### Core Requirements ✅
+- **Task List View**: Cards with title, description, category, completion status
+- **Task Images**: Proper loading and error states with fallbacks
+- **Category Filtering**: Dropdown-based filtering system
+- **Loading States**: Comprehensive loading indicators
+- **Add Task**: Modal form with validation
+- **Edit/Delete Tasks**: Full CRUD operations with confirmations
+- **Task Details**: Complete task information display
+- **Completion Toggle**: Status change functionality
+- **Category Integration**: API-driven category management
+
+### Additional Features 🚀
+- **Responsive Design**: Mobile-first with sidebar toggle
+- **Advanced Filtering**: Category, Priority, Status filters
+- **Toast Notifications**: Success/error feedback system
+- **Confirmation Dialogs**: Safe delete operations
+- **Progressive Loading**: Load more functionality
+- **Modern UI/UX**: Beautiful Tailwind CSS design
+- **Error Handling**: Comprehensive error states
+- **Form Validation**: Real-time validation with error messages
+- **Icon System**: Custom SVG icon components
+- **Teleport Modals**: Proper modal positioning
+
 ## Features
 
 ### Core Features
@@ -13,14 +84,14 @@ A modern task management application built with Vue 3, Pinia, Axios, and Tailwin
 - ✅ Responsive user interface
 
 ### Additional Features
-- 🎨 Beautiful and responsive design with Tailwind CSS
-- 🔄 State management with Pinia
-- 📱 Mobile-optimized interface
-- 🔍 Advanced filters (Category, Status, Priority)
-- 📊 Task statistics
-- 🔔 Notification system
-- ⚡ Progressive task loading
-- 🖼️ Image display with error handling
+- Beautiful and responsive design with Tailwind CSS
+- State management with Pinia
+- Mobile-optimized interface
+- Advanced filters (Category, Status, Priority)
+- Task statistics
+- Notification system
+- Progressive task loading
+- Image display with error handling
 
 ## Technologies Used
 
@@ -98,28 +169,48 @@ src/
 
 ## Installation and Setup
 
-1. **Install dependencies:**
+1. **Clone the repository:**
+```bash
+git clone <repository-url>
+cd task-manager
+```
+
+2. **Install dependencies:**
 ```bash
 npm install
 ```
 
-2. **Environment variables are configured in vite.config.js:**
+3. **Environment variables are configured in vite.config.js:**
 ```javascript
 define: {
-  'import.meta.env.VITE_SUPABASE_URL': JSON.stringify('https://kbybdtacoqvgcijrkzkv.supabase.co/rest/v1'),
+  'import.meta.env.VITE_SUPABASE_URL': JSON.stringify('https://your-project-id.supabase.co/rest/v1'),
   'import.meta.env.VITE_SUPABASE_ANON_KEY': JSON.stringify('your-anon-key-here')
 }
 ```
 
-3. **Run the application:**
+4. **Run the development server:**
 ```bash
 npm run dev
 ```
 
-4. **Build for production:**
+5. **Build for production:**
 ```bash
 npm run build
 ```
+
+6. **Preview production build:**
+```bash
+npm run preview
+```
+
+## Known Limitations
+
+- **Image Upload**: Currently only supports image URLs, no file upload     functionality
+- **Real-time Updates**: No WebSocket integration for live updates
+- **User Authentication**: No user login/registration system
+- **Task Assignments**: No user assignment or collaboration features
+- **File Attachments**: No support for file attachments beyond images
+- **Advanced Search**: Basic filtering only, no full-text search
 
 ## Environment Variables
 
@@ -193,6 +284,24 @@ VITE_SUPABASE_ANON_KEY=your-anon-key-here
 3. Commit your changes
 4. Push to the branch
 5. Create a Pull Request
+
+## Screenshots
+
+### Task List View
+![Task List](/src/assets/imgs/Screenshot%202025-TaskList.png)
+*Main task listing with sidebar filters and responsive design*
+
+### Task Detail View
+![Task Detail](/src/assets/imgs/Screenshot%202025-TaskDetails.png)
+*Individual task details with edit/delete actions*
+
+### Add/Edit Task Modal
+![Task Modal](/src/assets/imgs/Screenshot%202025-TaskForm.png)
+*Modal form for adding and editing tasks*
+
+### Mobile Responsive Design
+![Mobile View](/src/assets/imgs/Screenshot%202025-TaskList.png)
+*Mobile-optimized interface with collapsible sidebar*
 
 ## License
 

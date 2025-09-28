@@ -3,9 +3,11 @@
   <div class="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
     <div class="h-32 bg-gray-100 relative overflow-hidden">
       <img 
-        :src="task.image_url" 
+        :src="task.image_url || FallbackImage" 
         :alt="task.title"
         class="w-full h-full object-cover"
+        @error="handleImageError"
+        @load="handleImageLoad"
       />
     </div>
     
@@ -66,9 +68,10 @@
 
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useTaskStore } from '@/stores/taskStore'
 import { useCategoryStore } from '@/stores/categoryStore'
+import FallbackImage from '../assets/imgs/Nature.png'
 
 const props = defineProps({
   task: {
@@ -79,6 +82,7 @@ const props = defineProps({
 
 const taskStore = useTaskStore()
 const categoryStore = useCategoryStore()
+const imageError = ref(false)
 
 // Get category by ID from categoryStore
 const taskCategory = computed(() => {
@@ -102,6 +106,16 @@ const formatDate = (dateString) => {
     day: 'numeric',
     year: 'numeric'
   })
+}
+
+const handleImageError = (event) => {
+  console.warn(`Image failed to load for task ${props.task.id}:`, event.target.src)
+  imageError.value = true
+  event.target.src = FallbackImage
+}
+
+const handleImageLoad = () => {
+  imageError.value = false
 }
 </script>
 

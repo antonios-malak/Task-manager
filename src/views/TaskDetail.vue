@@ -65,6 +65,8 @@
             :src="taskStore?.currentTask?.image_url"
             :alt="taskStore?.currentTask?.title"
             class="w-full h-full object-cover"
+            @error="handleImageError"
+            @load="handleImageLoad"
           />
           <div
             v-else
@@ -257,6 +259,7 @@
   const taskStore = useTaskStore();
   const categoryStore = useCategoryStore();
   const showDeleteDialog = ref(false);
+  const imageError = ref(false);
 
   // Get category by ID
   const taskCategory = computed(() => {
@@ -306,11 +309,6 @@
     }
   };
 
-  // const handleModalSuccess = async () => {
-  //   if (taskStore.currentTask) {
-  //     await taskStore.fetchTask(taskStore.currentTask.id);
-  //   }
-  // };
 
   const showDeleteConfirm = () => {
     showDeleteDialog.value = true;
@@ -329,6 +327,15 @@
 
   const cancelDelete = () => {
     showDeleteDialog.value = false;
+  };
+
+  const handleImageError = (event) => {
+    console.warn(`Image failed to load for task ${taskStore.currentTask?.id}:`, event.target.src);
+    imageError.value = true;
+  };
+
+  const handleImageLoad = () => {
+    imageError.value = false;
   };
 
   const formatDate = (dateString) => {

@@ -14,9 +14,14 @@
       <div class="relative z-10 inline-block w-full max-w-2xl p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
         <!-- Header -->
         <div class="flex items-center justify-between mb-6">
-          <h3 class="text-2xl font-bold text-gray-900">
-            {{ isEditMode ? 'Edit Task' : 'Add New Task' }}
-          </h3>
+          <div>
+            <h3 class="text-2xl font-bold text-gray-900">
+              {{ isEditMode ? 'Edit Task' : 'Add New Task' }}
+            </h3>
+            <p v-if="isOffline" class="text-sm text-red-500 mt-1">
+              📡 Offline - Changes will be saved when connection is restored
+            </p>
+          </div>
           <button
             @click="closeModal"
             class="text-gray-400 hover:text-gray-600 transition-colors duration-200"
@@ -168,7 +173,7 @@
             </button>
             <button
               type="submit"
-              :disabled="isSubmitting"
+              :disabled="isSubmitting || isOffline"
               class="px-6 py-3 bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 text-white rounded-lg font-semibold transition-colors duration-200 flex items-center"
             >
               <div
@@ -191,6 +196,7 @@ import { useTaskStore } from '@/stores/taskStore'
 import { useCategoryStore } from '@/stores/categoryStore'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import CloseModalIcon from '@/assets/icons/CloseModalIcon.vue'
+import { useNetworkStatus } from '@/composables/useNetworkStatus'
 
 // Props
 const props = defineProps({
@@ -212,6 +218,7 @@ const props = defineProps({
 // Stores
 const taskStore = useTaskStore()
 const categoryStore = useCategoryStore()
+const { isOffline } = useNetworkStatus()
 
 // State
 const isSubmitting = ref(false)

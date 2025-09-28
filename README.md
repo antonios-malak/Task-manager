@@ -183,6 +183,7 @@ npm install
 3. **Environment variables are configured in vite.config.js:**
 ```javascript
 define: {
+  'import.meta.env.VITE_SUPABASE_URL': JSON.stringify('https://YOUR_PROJECT_ID.supabase.co/rest/v1'),
   'import.meta.env.VITE_SUPABASE_URL': JSON.stringify('https://your-project-id.supabase.co/rest/v1'),
   'import.meta.env.VITE_SUPABASE_ANON_KEY': JSON.stringify('your-anon-key-here')
 }
@@ -218,12 +219,6 @@ npm run preview
 VITE_SUPABASE_URL=https://your-project-id.supabase.co/rest/v1/
 VITE_SUPABASE_ANON_KEY=your-anon-key-here
 ```
-
-## Supported Browsers
-
-- Chrome/Edge (latest 2 versions)
-- Firefox (latest 2 versions)
-- Safari 14+
 
 ## Technical Features
 
@@ -264,7 +259,7 @@ VITE_SUPABASE_ANON_KEY=your-anon-key-here
 - ✅ Responsive design for mobile devices
 
 ### Code Quality
-- ✅ Simplified form handling (removed vee-validate complexity)
+- ✅ Simplified form handling 
 - ✅ Extracted SVG icons into reusable components
 - ✅ Clean component architecture
 - ✅ Proper error handling

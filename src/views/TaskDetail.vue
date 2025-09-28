@@ -1,19 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
-    <!-- Header -->
-    <header class="bg-white shadow-sm border-b border-gray-200">
-      <div class="max-w-7xl mx-auto px-6 py-4">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center">
-            <router-link to="/">
-              <h1 class="text-2xl font-bold text-gray-900">
-                Ta<span class="text-red-500">sk Ma</span>nager
-              </h1>
-            </router-link>
-          </div>
-        </div>
-      </div>
-    </header>
+  <DefaultLayout>
     <div class="flex items-center ps-6 md:ps-[100px] mt-10">
       <button
         @click="$router.go(-1)"
@@ -22,9 +8,6 @@
         <BackIcon class="mr-2" />
       </button>
     </div>
-
-    <!-- Main Content -->
-    <main class="max-w-4xl mx-auto px-6 py-8">
       <!-- Loading State -->
       <div
         v-if="taskStore.loading"
@@ -60,16 +43,23 @@
         <!-- Task Image -->
 
         <div class="h-64 bg-gray-100 relative overflow-hidden">
+          <!-- Image Skeleton -->
+          <ImageSkeleton v-if="imageLoading && taskStore?.currentTask?.image_url" />
+          
+          <!-- Actual Image -->
           <img
             v-if="taskStore?.currentTask?.image_url"
+            v-show="!imageLoading"
             :src="taskStore?.currentTask?.image_url"
             :alt="taskStore?.currentTask?.title"
             class="w-full h-full object-cover"
             @error="handleImageError"
             @load="handleImageLoad"
           />
+          
+          <!-- No Image Placeholder -->
           <div
-            v-else
+            v-if="!taskStore?.currentTask?.image_url"
             class="w-full h-full flex items-center justify-center bg-gradient-to-br from-orange-100 to-orange-200"
           >
             <div class="text-center">
@@ -206,8 +196,7 @@
           </div>
         </div>
       </div>
-    </main>
-  </div>
+  </DefaultLayout>
 
   <!-- Task Modal Form -->
   <TaskModalForm
@@ -233,9 +222,11 @@
   import { useRoute, useRouter } from "vue-router";
   import { useTaskStore } from "@/stores/taskStore";
   import { useCategoryStore } from "@/stores/categoryStore";
+  import DefaultLayout from "@/layouts/defaultLayout.vue";
   import LoadingSpinner from "@/components/LoadingSpinner.vue";
   import TaskModalForm from "@/components/TaskModalForm.vue";
   import ConfirmDialog from "@/components/ConfirmDialog.vue";
+  import ImageSkeleton from "@/components/ImageSkeleton.vue";
   import BackIcon from "@/assets/icons/BackIcon.vue";
   import CheckIcon from "@/assets/icons/CheckIcon.vue";
   import CloseIcon from "@/assets/icons/CloseIcon.vue";
@@ -243,7 +234,6 @@
   import DeleteIcon from "@/assets/icons/DeleteIcon.vue";
   import ErrorIcon from "@/assets/icons/ErrorIcon.vue";
   import TaskIcon from "@/assets/icons/TaskIcon.vue";
-  import NotFoundIcon from "@/assets/icons/NotFoundIcon.vue";
   import { useToast } from "vue-toastification";
 
   const props = defineProps({
@@ -260,6 +250,7 @@
   const categoryStore = useCategoryStore();
   const showDeleteDialog = ref(false);
   const imageError = ref(false);
+  const imageLoading = ref(true);
 
   // Get category by ID
   const taskCategory = computed(() => {
@@ -288,6 +279,7 @@
 
   const loadTask = async () => {
     if (taskId.value) {
+      imageLoading.value = true; // Reset loading state for new task
       await taskStore.fetchTask(taskId.value);
     }
   };
@@ -332,10 +324,12 @@
   const handleImageError = (event) => {
     console.warn(`Image failed to load for task ${taskStore.currentTask?.id}:`, event.target.src);
     imageError.value = true;
+    imageLoading.value = false;
   };
 
   const handleImageLoad = () => {
     imageError.value = false;
+    imageLoading.value = false;
   };
 
   const formatDate = (dateString) => {
@@ -356,3 +350,4 @@
     loadTask();
   });
 </script>
+

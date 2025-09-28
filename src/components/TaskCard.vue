@@ -1,8 +1,13 @@
 <template>
-    <router-link :to="{ name: 'TaskDetail', params: { id: task.id } }">
+  <router-link :to="{ name: 'TaskDetail', params: { id: task.id } }">
   <div class="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
     <div class="h-32 bg-gray-100 relative overflow-hidden">
+      <!-- Image Skeleton -->
+      <ImageSkeleton v-if="imageLoading" />
+      
+      <!-- Actual Image -->
       <img 
+        v-show="!imageLoading"
         :src="task.image_url || FallbackImage" 
         :alt="task.title"
         class="w-full h-full object-cover"
@@ -71,7 +76,8 @@
 import { computed, ref } from 'vue'
 import { useTaskStore } from '@/stores/taskStore'
 import { useCategoryStore } from '@/stores/categoryStore'
-import FallbackImage from '../assets/imgs/Nature.png'
+import ImageSkeleton from './ImageSkeleton.vue'
+import FallbackImage from '../assets/imgs/Nature.webp'
 
 const props = defineProps({
   task: {
@@ -83,6 +89,7 @@ const props = defineProps({
 const taskStore = useTaskStore()
 const categoryStore = useCategoryStore()
 const imageError = ref(false)
+const imageLoading = ref(true)
 
 // Get category by ID from categoryStore
 const taskCategory = computed(() => {
@@ -111,11 +118,13 @@ const formatDate = (dateString) => {
 const handleImageError = (event) => {
   console.warn(`Image failed to load for task ${props.task.id}:`, event.target.src)
   imageError.value = true
+  imageLoading.value = false
   event.target.src = FallbackImage
 }
 
 const handleImageLoad = () => {
   imageError.value = false
+  imageLoading.value = false
 }
 </script>
 

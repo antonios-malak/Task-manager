@@ -211,6 +211,7 @@ npm run preview
 - **Task Assignments**: No user assignment or collaboration features
 - **File Attachments**: No support for file attachments beyond images
 - **Advanced Search**: Basic filtering only, no full-text search
+- **Improve Accessibilty**: Aria labels support , sr only classes and window announcements . 
 
 ## Technical Features
 
